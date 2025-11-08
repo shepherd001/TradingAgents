@@ -59,11 +59,13 @@ def _make_api_request(function_name: str, params: dict) -> dict | str:
     
     if entitlement:
         api_params["entitlement"] = entitlement
-    elif "entitlement" in api_params:
+    if "entitlement" in api_params:
         # Remove entitlement if it's None or empty
         api_params.pop("entitlement", None)
     
+    print(f"DEBUG: Alpha Vantage API Request Parameters: {api_params}")
     response = requests.get(API_BASE_URL, params=api_params)
+    print(f"DEBUG: Alpha Vantage API Request URL: {response.url}")
     response.raise_for_status()
 
     response_text = response.text
